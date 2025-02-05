@@ -85,6 +85,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchWeaponForward",
+                    "type": "Button",
+                    "id": "dc1233d3-e5f1-491a-8643-62b867182463",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchWeaponBackward",
+                    "type": "Button",
+                    "id": "3086c659-78ed-4d1c-8dac-3497acba3064",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -349,6 +367,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "RequestRespawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0837bf78-b2ce-4796-8424-5447a739ea92",
+                    "path": "<Mouse>/forwardButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchWeaponForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c36af46-647b-4984-ae5b-dd67dd9d0e0e",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchWeaponBackward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

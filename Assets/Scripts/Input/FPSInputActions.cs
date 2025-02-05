@@ -173,6 +173,24 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponForward"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc1233d3-e5f1-491a-8643-62b867182463"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponBackward"",
+                    ""type"": ""Button"",
+                    ""id"": ""3086c659-78ed-4d1c-8dac-3497acba3064"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -437,6 +455,28 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RequestRespawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0837bf78-b2ce-4796-8424-5447a739ea92"",
+                    ""path"": ""<Mouse>/forwardButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponForward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c36af46-647b-4984-ae5b-dd67dd9d0e0e"",
+                    ""path"": ""<Mouse>/backButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponBackward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -780,6 +820,8 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             m_Gameplay_SpectatorVertical = m_Gameplay.FindAction("SpectatorVertical", throwIfNotFound: true);
             m_Gameplay_TogglePauseMenu = m_Gameplay.FindAction("TogglePauseMenu", throwIfNotFound: true);
             m_Gameplay_RequestRespawn = m_Gameplay.FindAction("RequestRespawn", throwIfNotFound: true);
+            m_Gameplay_SwitchWeaponForward = m_Gameplay.FindAction("SwitchWeaponForward", throwIfNotFound: true);
+            m_Gameplay_SwitchWeaponBackward = m_Gameplay.FindAction("SwitchWeaponBackward", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -883,6 +925,8 @@ namespace Unity.Template.CompetitiveActionMultiplayer
         private readonly InputAction m_Gameplay_SpectatorVertical;
         private readonly InputAction m_Gameplay_TogglePauseMenu;
         private readonly InputAction m_Gameplay_RequestRespawn;
+        private readonly InputAction m_Gameplay_SwitchWeaponForward;
+        private readonly InputAction m_Gameplay_SwitchWeaponBackward;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -930,6 +974,14 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             /// Provides access to the underlying input action "Gameplay/RequestRespawn".
             /// </summary>
             public InputAction @RequestRespawn => m_Wrapper.m_Gameplay_RequestRespawn;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/SwitchWeaponForward".
+            /// </summary>
+            public InputAction @SwitchWeaponForward => m_Wrapper.m_Gameplay_SwitchWeaponForward;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/SwitchWeaponBackward".
+            /// </summary>
+            public InputAction @SwitchWeaponBackward => m_Wrapper.m_Gameplay_SwitchWeaponBackward;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -983,6 +1035,12 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 @RequestRespawn.started += instance.OnRequestRespawn;
                 @RequestRespawn.performed += instance.OnRequestRespawn;
                 @RequestRespawn.canceled += instance.OnRequestRespawn;
+                @SwitchWeaponForward.started += instance.OnSwitchWeaponForward;
+                @SwitchWeaponForward.performed += instance.OnSwitchWeaponForward;
+                @SwitchWeaponForward.canceled += instance.OnSwitchWeaponForward;
+                @SwitchWeaponBackward.started += instance.OnSwitchWeaponBackward;
+                @SwitchWeaponBackward.performed += instance.OnSwitchWeaponBackward;
+                @SwitchWeaponBackward.canceled += instance.OnSwitchWeaponBackward;
             }
 
             /// <summary>
@@ -1021,6 +1079,12 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 @RequestRespawn.started -= instance.OnRequestRespawn;
                 @RequestRespawn.performed -= instance.OnRequestRespawn;
                 @RequestRespawn.canceled -= instance.OnRequestRespawn;
+                @SwitchWeaponForward.started -= instance.OnSwitchWeaponForward;
+                @SwitchWeaponForward.performed -= instance.OnSwitchWeaponForward;
+                @SwitchWeaponForward.canceled -= instance.OnSwitchWeaponForward;
+                @SwitchWeaponBackward.started -= instance.OnSwitchWeaponBackward;
+                @SwitchWeaponBackward.performed -= instance.OnSwitchWeaponBackward;
+                @SwitchWeaponBackward.canceled -= instance.OnSwitchWeaponBackward;
             }
 
             /// <summary>
@@ -1408,6 +1472,20 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnRequestRespawn(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "SwitchWeaponForward" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSwitchWeaponForward(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "SwitchWeaponBackward" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSwitchWeaponBackward(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
