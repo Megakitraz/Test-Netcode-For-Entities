@@ -245,19 +245,22 @@ namespace Unity.Template.CompetitiveActionMultiplayer
 
                             // Spawn & assign starting weapon
                             Entity randomWeaponPrefab;
+                            int weaponIndex;
                             if (gameResources.ForceOnlyFirstWeapon)
                             {
                                 randomWeaponPrefab = weaponPrefabs[0].WeaponPrefab;
+                                weaponIndex = 0;
                             }
                             else
                             {
-                                randomWeaponPrefab = weaponPrefabs[random.Random.NextInt(0, weaponPrefabs.Length)]
-                                    .WeaponPrefab;
+                                weaponIndex = random.Random.NextInt(0, weaponPrefabs.Length);
+                                randomWeaponPrefab = weaponPrefabs[weaponIndex].WeaponPrefab;
                             }
 
                             // Weapon
                             Entity weaponEntity = ecb.Instantiate(randomWeaponPrefab);
                             ecb.SetComponent(weaponEntity, new GhostOwner { NetworkId = ownerNetworkId.Value });
+                            ecb.SetComponent(weaponEntity, new WeaponPrefabIndex { Index = weaponIndex }); // Track weapon index
                             ecb.SetComponent(characterEntity, new ActiveWeapon { Entity = weaponEntity });
 
                             state.EntityManager.GetName(gameResources.CharacterGhost, out var characterNameFs);

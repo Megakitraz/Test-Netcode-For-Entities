@@ -176,21 +176,21 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 },
                 {
                     ""name"": ""SwitchWeaponForward"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""dc1233d3-e5f1-491a-8643-62b867182463"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""SwitchWeaponBackward"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""3086c659-78ed-4d1c-8dac-3497acba3064"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -461,7 +461,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 {
                     ""name"": """",
                     ""id"": ""0837bf78-b2ce-4796-8424-5447a739ea92"",
-                    ""path"": ""<Mouse>/forwardButton"",
+                    ""path"": ""<Mouse>/scroll/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -472,7 +472,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 {
                     ""name"": """",
                     ""id"": ""6c36af46-647b-4984-ae5b-dd67dd9d0e0e"",
-                    ""path"": ""<Mouse>/backButton"",
+                    ""path"": ""<Mouse>/scroll/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
