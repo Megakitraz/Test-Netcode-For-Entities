@@ -27,6 +27,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
         public List<GameObject> WeaponGhosts;
 
         [Header("Other Prefabs")]
+        public GameObject SpellAmmoPrefab;
         public GameObject SpectatorPrefab;
         public GameObject NameTagPrefab;
 
@@ -55,6 +56,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                     SpawnPointCollisionFilter = GameLayers.CollideWithPlayers,
 
                     PlayerGhost = GetEntity(authoring.PlayerGhost, TransformUsageFlags.Dynamic),
+                    SpellAmmo = GetEntity(authoring.SpellAmmoPrefab, TransformUsageFlags.Dynamic),
                     CharacterGhost = GetEntity(authoring.CharacterGhost, TransformUsageFlags.Dynamic),
                     SpectatorPrefab = GetEntity(authoring.SpectatorPrefab, TransformUsageFlags.Dynamic),
 
@@ -62,6 +64,11 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 });
 
                 DynamicBuffer<GameResourcesWeapon> weaponsBuffer = AddBuffer<GameResourcesWeapon>(entity);
+                weaponsBuffer.Add(new GameResourcesWeapon
+                {
+                    WeaponPrefab = GetEntity(authoring.SpellAmmoPrefab, TransformUsageFlags.Dynamic),
+                });
+
                 for (var i = 0; i < authoring.WeaponGhosts.Count; i++)
                 {
                     weaponsBuffer.Add(new GameResourcesWeapon
@@ -108,6 +115,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
 
         public Entity PlayerGhost;
         public Entity CharacterGhost;
+        public Entity SpellAmmo;
         public Entity SpectatorPrefab;
 
         public bool ForceOnlyFirstWeapon;

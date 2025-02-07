@@ -2,6 +2,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using UnityEngine;
 using Unity.Mathematics;
+using Unity.Transforms;
 
 namespace Unity.Template.CompetitiveActionMultiplayer
 {
@@ -28,9 +29,10 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
 
-            foreach (var playerCommands in SystemAPI
+            foreach (var (playerCommands, playerEntity) in SystemAPI
                          .Query<RefRW<FirstPersonPlayerCommands>>()
-                         .WithAll<GhostOwnerIsLocal, FirstPersonPlayer>())
+                         .WithAll<GhostOwnerIsLocal, FirstPersonPlayer>()
+                         .WithEntityAccess())
             {
                 if (GameSettings.Instance.IsPauseMenuOpen)
                 {
@@ -84,7 +86,53 @@ namespace Unity.Template.CompetitiveActionMultiplayer
 
                 // Spell input
                 if (defaultActionsMap.Spell.WasPressedThisFrame())
-                    Debug.Log("Spell Throw");
+                {
+                    Debug.Log("Spell button pressed");
+                    var gameResources = SystemAPI.GetSingleton<GameResources>();
+                    if (gameResources.SpellAmmo != Entity.Null)
+                    {
+                        FirstPersonPlayer player = SystemAPI.GetComponent<FirstPersonPlayer>(playerEntity);
+                        if (player.ControlledCharacter != Entity.Null &&
+                            SystemAPI.Exists(player.ControlledCharacter))
+                        {
+                            // Get the character's transform
+                            LocalTransform characterTransform =
+                                SystemAPI.GetComponent<LocalTransform>(player.ControlledCharacter);
+
+                            // Get the weapon entity from the character's WeaponOwner component
+                            if (SystemAPI.HasComponent<WeaponOwner>(player.ControlledCharacter))
+                            {
+                                WeaponOwner weaponOwner =
+                                    SystemAPI.GetComponent<WeaponOwner>(player.ControlledCharacter);
+                                Entity weaponEntity = weaponOwner.Entity;
+
+                                // Ensure the weapon entity exists and has the buffer
+                                if (weaponEntity != Entity.Null &&
+                                    SystemAPI.Exists(weaponEntity))
+                                {
+                                    // Add the projectile event to the weapon's buffer
+                                    ecb.AppendToBuffer(weaponEntity, new WeaponProjectileEvent
+                                    {
+                                        Id = (uint)UnityEngine.Random.Range(1, 1000),
+                                        SimulationPosition = characterTransform.Position,
+                                        SimulationDirection = characterTransform.Forward(),
+                                        VisualPosition = characterTransform.Position
+                                    });
+
+                                    Debug.Log("Spell projectile event added to weapon!");
+                                }
+                                else
+                                {
+                                    Debug.LogError("Weapon entity is invalid!");
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError("Character has no WeaponOwner component!");
+                            }
+                        }
+                    }
+                }
 
                 // Aim handling
                 playerCommands.ValueRW.AimHeld = defaultActionsMap.Aim.IsPressed();

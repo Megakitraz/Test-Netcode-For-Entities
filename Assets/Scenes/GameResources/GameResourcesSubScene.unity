@@ -246,6 +246,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3230673561171217928, guid: 113ae9b4c553f004ea097e9be244d5ac, type: 3}
+      propertyPath: SpellAmmoPrefab
+      value: 
+      objectReference: {fileID: 4435128402928720461, guid: c7872e31cd2a70941824c50352d85f89, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
