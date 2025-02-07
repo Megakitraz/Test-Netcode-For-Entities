@@ -82,6 +82,10 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 if (defaultActionsMap.Shoot.WasReleasedThisFrame())
                     playerCommands.ValueRW.ShootReleased.Set();
 
+                // Spell input
+                if (defaultActionsMap.Spell.WasPressedThisFrame())
+                    Debug.Log("Spell Throw");
+
                 // Aim handling
                 playerCommands.ValueRW.AimHeld = defaultActionsMap.Aim.IsPressed();
 
@@ -101,6 +105,9 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                     ecb.AddComponent(rpcEntity, new SwitchWeaponRpc { Direction = direction });
                     ecb.AddComponent(rpcEntity, new SendRpcCommandRequest());
                 }
+
+
+
             }
         }
     }

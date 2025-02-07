@@ -191,6 +191,15 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Spell"",
+                    ""type"": ""Button"",
+                    ""id"": ""1002d0a1-cfd4-445d-994a-fb13bc7c297d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -477,6 +486,17 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchWeaponBackward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b94356df-55c0-4cad-bf86-b907555b748f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -822,6 +842,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             m_Gameplay_RequestRespawn = m_Gameplay.FindAction("RequestRespawn", throwIfNotFound: true);
             m_Gameplay_SwitchWeaponForward = m_Gameplay.FindAction("SwitchWeaponForward", throwIfNotFound: true);
             m_Gameplay_SwitchWeaponBackward = m_Gameplay.FindAction("SwitchWeaponBackward", throwIfNotFound: true);
+            m_Gameplay_Spell = m_Gameplay.FindAction("Spell", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -927,6 +948,7 @@ namespace Unity.Template.CompetitiveActionMultiplayer
         private readonly InputAction m_Gameplay_RequestRespawn;
         private readonly InputAction m_Gameplay_SwitchWeaponForward;
         private readonly InputAction m_Gameplay_SwitchWeaponBackward;
+        private readonly InputAction m_Gameplay_Spell;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -982,6 +1004,10 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             /// Provides access to the underlying input action "Gameplay/SwitchWeaponBackward".
             /// </summary>
             public InputAction @SwitchWeaponBackward => m_Wrapper.m_Gameplay_SwitchWeaponBackward;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Spell".
+            /// </summary>
+            public InputAction @Spell => m_Wrapper.m_Gameplay_Spell;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1041,6 +1067,9 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 @SwitchWeaponBackward.started += instance.OnSwitchWeaponBackward;
                 @SwitchWeaponBackward.performed += instance.OnSwitchWeaponBackward;
                 @SwitchWeaponBackward.canceled += instance.OnSwitchWeaponBackward;
+                @Spell.started += instance.OnSpell;
+                @Spell.performed += instance.OnSpell;
+                @Spell.canceled += instance.OnSpell;
             }
 
             /// <summary>
@@ -1085,6 +1114,9 @@ namespace Unity.Template.CompetitiveActionMultiplayer
                 @SwitchWeaponBackward.started -= instance.OnSwitchWeaponBackward;
                 @SwitchWeaponBackward.performed -= instance.OnSwitchWeaponBackward;
                 @SwitchWeaponBackward.canceled -= instance.OnSwitchWeaponBackward;
+                @Spell.started -= instance.OnSpell;
+                @Spell.performed -= instance.OnSpell;
+                @Spell.canceled -= instance.OnSpell;
             }
 
             /// <summary>
@@ -1486,6 +1518,13 @@ namespace Unity.Template.CompetitiveActionMultiplayer
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSwitchWeaponBackward(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Spell" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSpell(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
